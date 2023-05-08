@@ -7,6 +7,13 @@ defineProps({
     type: [Object, null]
   }
 })
+
+const today = new Date().toLocaleString('en-EN', {
+  weekday: 'short',
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric'
+})
 </script>
 
 <template>
@@ -21,8 +28,8 @@ defineProps({
         {{ capitalizeFirstLetter(weatherInfo?.weather[0].description) }}
       </div>
     </div>
-    <div class="city text-block">Paris, FR</div>
-    <div class="date text-block">Thu, March 16, 2023</div>
+    <div class="city text-block">{{ weatherInfo?.name }}, {{ weatherInfo?.sys?.country }}</div>
+    <div class="date text-block">{{ today }}</div>
   </div>
 </template>
 
