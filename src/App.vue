@@ -31,7 +31,9 @@ onMounted(getWeather)
                 <WeatherSummary :weatherInfo="weatherInfo" />
               </div>
             </section>
-            <section class="section section-right"><WeatherHighlights /></section>
+            <section class="section section-right">
+              <WeatherHighlights :weatherInfo="weatherInfo" />
+            </section>
           </div>
           <div class="sections">
             <section class="section-bottom">

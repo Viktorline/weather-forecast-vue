@@ -1,4 +1,13 @@
-<script setup></script>
+<script setup>
+import { kiloposcalesToMillimetres, normalizeTime } from '../utils'
+
+defineProps({
+  weatherInfo: {
+    required: true,
+    type: [Object, null]
+  }
+})
+</script>
 
 <template>
   <div class="section highlights">
@@ -11,11 +20,11 @@
           <div class="card-info">
             <div class="card-justify">
               <div class="info-main">
-                <div class="info-main-num">3.6</div>
+                <div class="info-main-num">{{ weatherInfo?.wind?.speed }}</div>
                 <div class="info-main-text">m/s</div>
               </div>
               <div class="info-main">
-                <div class="info-main-num">350</div>
+                <div class="info-main-num">{{ weatherInfo?.wind?.deg }}</div>
                 <div class="info-main-text">deg</div>
               </div>
             </div>
@@ -25,8 +34,10 @@
           <div class="card-small-title">Wind gusts</div>
           <div class="card-small-info">
             <div class="card-small-data">
-              <div class="info-main-num">8.4</div>
-              <div class="info-main-text">m/s</div>
+              <div class="info-main-num">
+                {{ weatherInfo?.wind?.gust ?? '0' }}
+              </div>
+              <div v-if="weatherInfo?.wind?.gust" class="info-main-text">m/s</div>
             </div>
             <div class="card-small-hint">
               <div class="card-small-pic card-small-pic--wind"></div>
@@ -50,7 +61,9 @@
           <div class="card-info">
             <div class="card-centered">
               <div class="info-main">
-                <div class="info-main-num">765</div>
+                <div class="info-main-num">
+                  {{ kiloposcalesToMillimetres(weatherInfo?.main?.pressure) }}
+                </div>
                 <div class="info-main-text">mm</div>
               </div>
             </div>
@@ -60,7 +73,7 @@
           <div class="card-small-title">Feels like</div>
           <div class="card-small-info">
             <div class="card-small-data">
-              <div class="info-main-num">21</div>
+              <div class="info-main-num">{{ Math.round(weatherInfo?.main?.feels_like) }}</div>
               <div class="info-main-text">°C</div>
             </div>
             <div class="card-small-hint">
@@ -79,12 +92,16 @@
               <div class="state">
                 <div class="state-pic"></div>
                 <div class="state-title">Sunrise</div>
-                <div class="state-time">07:31:42</div>
+                <div class="state-time">
+                  {{ normalizeTime(weatherInfo?.sys?.sunrise, weatherInfo?.timezone) }}
+                </div>
               </div>
               <div class="state">
                 <div class="state-pic state-pic--flipped"></div>
                 <div class="state-title">Sunset</div>
-                <div class="state-time">18:34:19</div>
+                <div class="state-time">
+                  {{ normalizeTime(weatherInfo?.sys?.sunset, weatherInfo?.timezone) }}
+                </div>
               </div>
             </div>
           </div>
@@ -93,7 +110,7 @@
           <div class="card-small-title">Cloudiness</div>
           <div class="card-small-info">
             <div class="card-small-data">
-              <div class="info-main-num">80</div>
+              <div class="info-main-num">{{ weatherInfo?.clouds?.all }}</div>
               <div class="info-main-text">%</div>
             </div>
             <div class="card-small-hint">
