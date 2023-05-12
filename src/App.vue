@@ -6,7 +6,7 @@ import WeatherHighlights from './components/WeatherHighlights.vue'
 import WeatherCoordinates from './components/WeatherCoordinates.vue'
 import WeatherHumidity from './components/WeatherHumidity.vue'
 
-const city = ref('Paris')
+const city = ref('Tomsk')
 const weatherInfo = ref(null)
 
 function getWeather() {
